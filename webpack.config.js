@@ -11,10 +11,11 @@ module.exports = {
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')
-    }
+    },
+    extensions: ['.ts', '.js'],
   },
   entry: {
-    main: './scripts/index.js',
+    main: './scripts/index.ts',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -37,6 +38,11 @@ module.exports = {
         use: 'babel-loader',
       },
       {
+        test: /\.js$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource',
         generator: {
@@ -44,7 +50,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(png|avif|svg|jpg|jpeg|gif)$/,
+        test: /\.(png|avif|webp|svg|jpg|jpeg|gif)$/,
         type: 'asset/resource',
         generator: {
           filename: isDev ? 'images/[name][ext][query]' : 'images/[name].[hash][ext][query]'
@@ -68,8 +74,8 @@ module.exports = {
               importLoaders: 1
             }
           },
+          "sass-loader",
           "postcss-loader",
-          "sass-loader"
         ],
       }
     ]
